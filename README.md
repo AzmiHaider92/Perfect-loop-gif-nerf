@@ -27,7 +27,7 @@ Since a gif is a series of images, to utilize nerf, we need to:
 **Extracting images from gif***
 
 <p align="center">
-  <img src="extra/extractedImages.png" width="200" />
+  <img src="extra/extractedImages.png" width="600" />
 </p>
 
 **Camera Positions**  

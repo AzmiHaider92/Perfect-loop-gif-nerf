@@ -1,0 +1,14 @@
+checkpoints/
+configs/
+data/
+dataLoader/colmap_outputs/
+log/
+__pycache__/
+dataLoader/__pycache__/
+models/__pycache__/
+wandb/
+lightning_logs/
+*.sqsh
+*.out
+*.pyc
+

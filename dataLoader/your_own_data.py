@@ -71,7 +71,7 @@ class YourOwnDataset(Dataset):
             self.poses += [c2w]
 
             image_path = os.path.join(self.root_dir, f"{frame['file_path']}.png")
-            if os.path.exists(image_path):
+            if not os.path.exists(image_path):
                 image_path = os.path.join(self.root_dir, f"{frame['file_path']}.jpg")
             self.image_paths += [image_path]
             img = Image.open(image_path)

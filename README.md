@@ -2,7 +2,7 @@
 
 
 # Data 
-Scenes were taken from the dataset: https://ai.meta.com/datasets/CO3D-dataset/ 
+Scenes were taken from the dataset: https://ai.meta.com/datasets/CO3D-dataset/   
 Example: (notice the jump in the gif) 
 
 

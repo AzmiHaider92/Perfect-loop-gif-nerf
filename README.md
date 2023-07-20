@@ -2,7 +2,7 @@
 The target of this project is to create a perfect loop gif using a neural radiance fields technique.  
 example of a perfect loop gif:  
 
-![animatedOutput_o](https://github.com/AzmiHaider92/Perfect-loop-gif-nerf/assets/44143755/ea3aeceb-3dfc-4c1f-9bba-2aee2e81cb57 =250x250)
+<img src="https://github.com/AzmiHaider92/Perfect-loop-gif-nerf/tree/main/extra/animatedOutput_o.gif" width="48">
 
 
 

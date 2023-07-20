@@ -15,8 +15,8 @@ Example: (notice the end of the gif)
 </p>
 
 # Approach 
-A gif is a series of images.  
-To utilize nerf, we need to:  
+  
+Since a gif is a series of images, to utilize nerf, we need to:  
 1) extract images from the gif.
 2) generate camera position for each image (we use colmap for that).
 3) train nerf on the extracted images (+ generated camera positions).

@@ -26,8 +26,8 @@ Since a gif is a series of images, to utilize nerf, we need to:
 
 
 **Camera Positions**  
-This is a visualization of the camera position around the object.  
-You can see clearly that the person holding the camera is moving more than a 360deg around the object (the object is placed at (0,0,0)). Meaning, the person is not returning to the origin point.  
+This is a visualization of the camera positions around the object (the path that the person recording is doing around the object - assume object is placed at (0,0,0).   
+You can see clearly that the person holding the camera is moving more than a 360deg around the object. Meaning, the person is not returning to the origin point.  
 Also, the Z axis shows that the person is moving up and down while capturing the video.   
 
 <p align="center">

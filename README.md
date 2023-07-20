@@ -11,7 +11,7 @@ Scenes were taken from the dataset: https://ai.meta.com/datasets/CO3D-dataset/
 Example: (notice the end of the gif) 
 
 <p align="center">
-  <img src="extra/rgb_maps.gif.gif" width="200" />
+  <img src="extra/rgb_maps.gif" width="200" />
 </p>
 
 # Approach 

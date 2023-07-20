@@ -3,7 +3,7 @@ The target of this project is to create a perfect loop gif using a neural radian
 example of a perfect loop gif:  
 
 <img src="https://github.com/AzmiHaider92/Perfect-loop-gif-nerf/extra/animatedOutput_o.gif" width="200">
-
+![Alt Text](/extra/animatedOutput_o.gif =250x250)
 
 
 # Data 

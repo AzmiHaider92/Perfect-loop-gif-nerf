@@ -24,13 +24,14 @@ Since a gif is a series of images, to utilize nerf, we need to:
 5) run trained nerf network on the new path to generate new images
 6) create a new gif from the new images.
 
-**Extracting images from gif***
+**Extracting images from gif**
 
 <p align="center">
   <img src="extra/extractedImages.png" width="600" />
 </p>
 
 **Camera Positions**  
+We used Colmap to generate camera positions for extracted images.
 This is a visualization of the camera positions around the object (the path that the person recording is doing around the object - assume object is placed at (0,0,0).   
 You can see clearly that the person holding the camera is moving more than a 360deg around the object. Meaning, the person is not returning to the origin point.  
 Also, the Z axis shows that the person is moving up and down while capturing the video.   

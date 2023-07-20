@@ -10,9 +10,9 @@ example of a perfect loop gif:
 Scenes were taken from the dataset: https://ai.meta.com/datasets/CO3D-dataset/   
 Example: (notice the end of the gif) 
 
-
-![rgb_maps](https://github.com/AzmiHaider92/Perfect-loop-gif-nerf/assets/44143755/304881fa-6f77-4bd6-8a8e-662ae4e708b8)
-
+<p align="center">
+  <img src="extra/rgb_maps.gif.gif" width="200" />
+</p>
 
 # Approach 
 A gif is a series of images.  

@@ -11,7 +11,7 @@ Scenes were taken from the dataset: https://ai.meta.com/datasets/CO3D-dataset/
 Example: (notice the end of the gif) 
 
 <p align="center">
-  <img src="extra/rgb_maps.gif" width="200" />
+  <img src="extra/rgb_maps.gif" width="500" />
 </p>
 
 # Approach 
@@ -46,3 +46,10 @@ We chose TensoRF: https://apchenstu.github.io/TensoRF/
 The reason we chose this one is because the pytorch implementation is very clear and the run-time is short.   
 The training PSNR is 37.451 (the images are very good and no floating noise around the object).  
 
+**New camera positions**
+After training the model on the scene, we want to generated new images. For this purpose, we need new camera positions (points of view) to create a smooth path for the gif.   
+We sample 360 camera position ordered in a circle around the object. From them, 360 images are generated using the trained model.  
+
+<p align="center">
+  <img src="extra/newcameraPositions.png" width="900" />
+</p>

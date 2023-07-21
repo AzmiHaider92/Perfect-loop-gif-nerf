@@ -46,10 +46,17 @@ We chose TensoRF: https://apchenstu.github.io/TensoRF/
 The reason we chose this one is because the pytorch implementation is very clear and the run-time is short.   
 The training PSNR is 37.451 (the images are very good and no floating noise around the object).  
 
-**New camera positions**
+**New camera positions**  
 After training the model on the scene, we want to generated new images. For this purpose, we need new camera positions (points of view) to create a smooth path for the gif.   
-We sample 360 camera position ordered in a circle around the object. From them, 360 images are generated using the trained model.  
+We sample 360 camera position ordered in a circle around the object.   
 
 <p align="center">
-  <img src="extra/newcameraPositions.png" width="900" />
+  <img src="extra/newcameraPositions.png" width="500" />
 </p>
+
+**Generating new images from the new camera positions**  
+We generate 360 images from all angles around the object:  
+<p align="center">
+  <img src="extra/generatedImages.png" width="600" />
+</p>
+

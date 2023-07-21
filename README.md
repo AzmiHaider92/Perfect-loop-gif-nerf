@@ -4,7 +4,7 @@ The aim of this project is to create a steady perfect loop gif using a neural ra
 example of a perfect loop gif:  
 
 <p align="center">
-  <img src="extra/animatedOutput_o.gif" width="250" />
+  <img src="extra/animatedOutput_o.gif" width="200" />
 </p>
 
 # Data 
@@ -12,7 +12,7 @@ Scenes were taken from the dataset: https://ai.meta.com/datasets/CO3D-dataset/
 Notice the end of the gif, the last frame "jumps" to the first.  
 
 <p align="center">
-  <img src="extra/rgb_maps.gif" width="400" />
+  <img src="extra/rgb_maps.gif" width="200" />
 </p>
 
 # Approach 
@@ -73,7 +73,7 @@ We use the trained model to generate 360 images from 360 angles around the objec
 Putting together the generated images to create a perfect-loop gif.   
 
 <p align="center">
-  <img src="extra/new_path.gif" width="400" />
+  <img src="extra/new_path.gif" width="200" />
 </p>
 
 

@@ -3,7 +3,7 @@ The target of this project is to create a perfect loop gif using a neural radian
 example of a perfect loop gif:  
 
 <p align="center">
-  <img src="extra/animatedOutput_o.gif" width="200" />
+  <img src="extra/animatedOutput_o.gif" width="500" />
 </p>
 
 # Data 
@@ -60,3 +60,9 @@ We generate 360 images from all angles around the object:
   <img src="extra/generatedImages.png" width="600" />
 </p>
 
+**New gif**  
+Putting together the generated images to create a perfect-loop gif.  
+
+<p align="center">
+  <img src="extra/new_path.gif" width="500" />
+</p>

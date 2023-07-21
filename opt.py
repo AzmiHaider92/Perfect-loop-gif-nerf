@@ -85,7 +85,7 @@ def config_parser(cmd=None):
 
 
     parser.add_argument("--ckpt", type=str, default=None,
-                        help='specific weights npy file to reload for coarse network')
+                        help='specific weights npy-file to reload for coarse network')
     parser.add_argument("--render_only", type=int, default=0)
     parser.add_argument("--render_test", type=int, default=0)
     parser.add_argument("--render_train", type=int, default=0)

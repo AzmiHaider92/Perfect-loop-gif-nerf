@@ -70,7 +70,7 @@ We use the trained model to generate 360 images from 360 angles around the objec
 </p>
 
 **6. New gif**  
-Putting together the generated images to create a perfect-loop gif.  
+Putting together the generated images to create a perfect-loop gif.   
 
 <p align="center">
   <img src="extra/new_path.gif" width="400" />

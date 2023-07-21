@@ -5,7 +5,6 @@ example of a perfect loop gif:
 
 <p align="center">
   <img src="extra/animatedOutput_o.gif" width="250" />
-  <img src="extra/giphy.gif" width="250" />
 </p>
 
 # Data 

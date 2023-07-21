@@ -33,7 +33,8 @@ Since a gif is a series of images, to utilize nerf, we need to:
 
 **2. Camera Positions**  
 We used Colmap to generate camera positions for extracted images.
-Below is a visualization of the camera positions around the object. The blue points represent the path that the person recording is taking around the object - assume object is placed at (0,0,0).   
+Below is a visualization of the camera positions around the object (number of frame is next to the point in black).  
+The blue points represent the path that the person recording is taking around the object - assume object is placed at (0,0,0).  
 You can see clearly that the person holding the camera is moving more than a 360deg around the object. Meaning, the person is not returning to the origin point.  
 Also, the Z axis shows that the person is moving up and down while capturing the video.   
 

@@ -50,7 +50,7 @@ The training PSNR is 37.451 (the images are very good and no floating noise arou
 
 We also ran Instant-ngp and the result is good. It is definetly another way to go.  
 <p align="center">
-  <img src="extra/instantngp.png" width="900" />
+  <img src="extra/instantngp.png" width="500" />
 </p>
 
 

@@ -33,7 +33,7 @@ Since a gif is a series of images, to utilize nerf, we need to:
 
 **2. Camera Positions**  
 We used Colmap to generate camera positions for extracted images.
-This is a visualization of the camera positions around the object (the path that the person recording is doing around the object - assume object is placed at (0,0,0).   
+Below is a visualization of the camera positions around the object. The blue points represent the path that the person recording is taking around the object - assume object is placed at (0,0,0).   
 You can see clearly that the person holding the camera is moving more than a 360deg around the object. Meaning, the person is not returning to the origin point.  
 Also, the Z axis shows that the person is moving up and down while capturing the video.   
 
@@ -54,8 +54,9 @@ We also ran Instant-ngp and the result is good. It is definetly another way to g
 
 
 **4. New camera positions**  
-After training the model on the scene, we want to generated new images. For this purpose, we need new camera positions (points of view) to create a smooth path for the gif.   
-We sample 360 camera position ordered in a circle around the object.   
+After training the model on the scene, we want to generated new images.  
+For this purpose, we need new camera positions (points of view) to create a smooth path for the gif.   
+We sample 360 camera positions (The green points - which seem continuous because there's a large number of points) placed in a steady circle around the object.  
 
 <p align="center">
   <img src="extra/newcameraPositions.png" width="500" />

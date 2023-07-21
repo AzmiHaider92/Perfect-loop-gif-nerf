@@ -106,7 +106,7 @@ if __name__ == '__main__':
         xyz = frame[:3, 3]
         points.append(list(xyz) + [i])
     cm_camera_points = np.array(points)
-    show_figure(cm_camera_points, 'scene1')
+    show_figure(cm_camera_points, 'scene1', c='g')
     r, z = near_far(cm_camera_points)
 
     # new camera positions

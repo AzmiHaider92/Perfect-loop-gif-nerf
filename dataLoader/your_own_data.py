@@ -79,7 +79,7 @@ class YourOwnDataset(Dataset):
         self.directions = self.directions / torch.norm(self.directions, dim=-1, keepdim=True)
 
         self.render_path = torch.stack(
-            [pose_spherical(angle, -45.0, 4.0) @ self.blender2opencv for angle in np.linspace(-180, 180, 40 + 1)[:-1]], 0)
+            [pose_spherical(angle, -45.0, 4.0) @ self.blender2opencv for angle in np.linspace(-180, 180, 360 + 1)[:-1]], 0)
 
         self.intrinsics = torch.tensor([[self.focal_x,0,self.cx],[0,self.focal_y,self.cy],[0,0,1]]).float()
 

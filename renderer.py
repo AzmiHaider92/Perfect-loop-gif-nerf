@@ -104,7 +104,7 @@ def evaluation_path(test_dataset,tensorf, c2ws, renderer, savePath=None, N_vis=5
 
         W, H = test_dataset.img_wh
 
-        c2w = torch.FloatTensor(c2w)
+        c2w = torch.FloatTensor(np.array(c2w.data))
         rays_o, rays_d = get_rays(test_dataset.directions, c2w)  # both (h*w, 3)
         if ndc_ray:
             rays_o, rays_d = ndc_rays_blender(H, W, test_dataset.focal[0], 1.0, rays_o, rays_d)

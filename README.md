@@ -46,6 +46,8 @@ For this part, we had the freedom to use any variation of NeRF.
 We chose TensoRF: https://apchenstu.github.io/TensoRF/    
 The reason we chose this one is because the pytorch implementation is very clear and the run-time is short.   
 The training PSNR is 37.451 (the images are very good and no floating noise around the object).  
+
+We also ran Instant-ngp and the result is good. It is definetly another way to go.  
 <p align="center">
   <img src="extra/instantngp.png" width="900" />
 </p>

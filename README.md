@@ -46,6 +46,10 @@ For this part, we had the freedom to use any variation of NeRF.
 We chose TensoRF: https://apchenstu.github.io/TensoRF/    
 The reason we chose this one is because the pytorch implementation is very clear and the run-time is short.   
 The training PSNR is 37.451 (the images are very good and no floating noise around the object).  
+<p align="center">
+  <img src="extra/instantngp.png" width="900" />
+</p>
+
 
 **4. New camera positions**  
 After training the model on the scene, we want to generated new images. For this purpose, we need new camera positions (points of view) to create a smooth path for the gif.   

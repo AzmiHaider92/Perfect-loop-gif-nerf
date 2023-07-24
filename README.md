@@ -16,6 +16,8 @@ Notice how at the end of the gif the last frame "jumps" to the first.
   <img src="extra/rgb_maps.gif" width="400" />
 </p>
 
+The "jump" in frames happens because the camera position (position of the person capturing photos around the object) at the first frame and the last frame are not identical. Meaning, the person didn't return to the starting point - see camera positions below.
+
 # Approach 
   
 To create the *perfect-loop-gif* using NeRF, we follow these steps:  
@@ -60,8 +62,31 @@ We also ran Instant-ngp and the result is good. It is definetly another way to g
 
 **4. New camera positions**  
 After training the model on the scene, we want to generated new images.  
-For this purpose, we need new camera positions (points of view) to create a smooth path for the gif.   
-We sample 360 camera positions (The green points - which seem continuous because there's a large number of points) placed in a steady circle around the object.  
+For this purpose, we need a new camera path (points of view) to create a smooth path for the gif where the first and last frame are identical.
+
+A top-view of the camera path (assume object at (0,0))
+<p align="center">
+  <img src="extra/topview.png" width="600" />
+</p>
+
+We implemented two methods of creating a closed camera path:
+**4.1 fixing the existing camera path**
+What we mean by fixing the existing path is: 
+1) find the overlap point in the camera positions 
+2) delete all position after the overlap (in addition to some margin as well).
+3) create new position in the missing path.
+
+Left image: the red point marks the overlapping point.
+Middle image: In red, we see the overlapping camera path that is ignored. In yellow, we also ignore a margin of position in order to create a more smooth path.
+Right image: new position replaced the red/yellow positions. For those positions, new images will be generated.
+<p align="center">
+  <img src="extra/fixoverlap.png" width="500" />
+</p>
+   
+
+**4.2 New generic camera path**
+Another way to go is to ignore the whole camera path given and simply sample 360 camera positions in a steady circle around the object.   
+This creates a more smooth path than before because the camera positions are uniformly distributed and at the same height.
 
 <p align="center">
   <img src="extra/newcameraPositions.png" width="500" />
@@ -76,6 +101,13 @@ We use the trained model to generate 360 images from 360 angles around the objec
 **6. New gif**  
 Putting together the generated images to create a perfect-loop gif.   
 
+Fixing the existing path:  
+
+<p align="center">
+  <img src="extra/fixing_existing_path.gif" width="400" />
+</p>
+
+New generic path (unifrom 360):    
 <p align="center">
   <img src="extra/new_path.gif" width="400" />
 </p>

@@ -74,19 +74,17 @@ We implemented two methods of creating a closed camera path:
    
 **4.1 fixing the existing camera path**  
 What we mean by fixing the existing path is: 
-1) Find the overlap point in the camera path:
+1) Find the overlap point in the camera path:  
    Meaning, find the point where the person completed a 360 degree circle around the object.  
-2) Ignore all position after the overlap point.
-   Every position of camera after it completed a 360 degree is not relevant.
-   Also, we added some margin and Ignored positions before and after the overlapping point.  This way we have a circling path around the object missing some positions.
-3) In those missing positions in the circle, we will create new camera positions and generate images there so the transition is smooth between start and finish.  
-
-
-Left image: the red point marks the overlapping point.  
-Middle image: In red, we see the overlapping camera path that is ignored. In yellow, we also ignore a margin of positions in order to create a more smooth path.  
-Right image: new positions are created to replace the red/yellow positions. For those, new images will be generated (all the blue positions from before are the same).  
+   Figure (a) shows the overlap point in red.  
+2) Ignore all position after the overlap point.  
+   Every position of camera after it completed a 360 degree is not relevant. Figure (b) shows those positions in red.  
+   Also, we added some margin and Ignored positions before and after the overlapping point. Figure (b) shows the margin in yellow.  
+   This way we have a circling path around the object missing some positions.  
+3) In those missing positions in the circle shown missing in Figure (c), we will create new camera positions (shown in green in figure (d)) and generate images there so the transition is smooth between start and finish.   
+  
 <p align="center">
-  <img src="extra/fixoverlap.png" width="500" />
+  <img src="extra/fixoverlap.png" width="700" />
 </p>
    
 

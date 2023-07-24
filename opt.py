@@ -89,7 +89,8 @@ def config_parser(cmd=None):
     parser.add_argument("--render_only", type=int, default=0)
     parser.add_argument("--render_test", type=int, default=0)
     parser.add_argument("--render_train", type=int, default=0)
-    parser.add_argument("--render_path", type=int, default=0)
+    parser.add_argument("--render_generic_path", type=int, default=0)
+    parser.add_argument("--render_fixed_path", type=int, default=0)
     parser.add_argument("--export_mesh", type=int, default=0)
 
     # rendering options

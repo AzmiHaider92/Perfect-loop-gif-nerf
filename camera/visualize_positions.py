@@ -1,9 +1,8 @@
 import json
 import numpy as np
-import matplotlib.pyplot as plt
-import random
 import math
-from scipy.spatial.transform import Rotation as R
+import torch
+import matplotlib.pyplot as plt
 
 
 def base_cam_points(json_path):
@@ -17,25 +16,14 @@ def base_cam_points(json_path):
             points.append(p + [i])
     return np.array(points)
 
-def points_from_transforms(json_path):
-    points = []
-    camera_angle_x, camera_angle_y, cx, cy, w, h = 0,0,0,0,0,0
-    with open(json_path, 'r') as f:
-        data = json.load(f)
-        frames = data['frames']
-        try:
-            camera_angle_x, camera_angle_y, cx, cy, w, h = \
-                data['camera_angle_x'],  data['camera_angle_y'], data['cx'], data['cy'], data['w'], data['h']
-        except:
-            print("nonono")
-        for i, frame in enumerate(frames):
-            #frame_num = frame['file_path']
-            transform = np.array(frame['transform_matrix'])
-            xyz = transform[:3, 3]
-            points.append(list(xyz) + [i])
 
+def points_from_transforms(c2w):
+    points = []
+    for i, transform in enumerate(c2w):
+        xyz = transform[:3, 3]
+        points.append(list(xyz) + [i])
     points = np.array(points)
-    return points, camera_angle_x, camera_angle_y, cx, cy, w, h
+    return points
 
 
 def near_far(points):
@@ -59,6 +47,21 @@ def show_figure(points, title='', c='b'):
     ax.set_xlabel('x')
     ax.set_ylabel('y')
     ax.set_zlabel('z')
+    plt.title(title)
+
+
+def show_figure2D(points, title='', c='b'):
+    fig = plt.figure()
+    ax = fig.add_subplot()
+
+    for i in range(points.shape[0]):  # plot each point + it's index as text above
+        ax.scatter(points[i, 0], points[i, 1], color=c)
+        ax.text(points[i, 0], points[i, 1],
+                '%s' % (str(points[i, 2])), size=10, zorder=1,
+                color='k')
+
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
     plt.title(title)
 
 
@@ -90,16 +93,90 @@ def points_to_transforms(points):
         m = np.concatenate([np.concatenate([R, t], 1), bottom], 0)
 
 
+def link_cam_points(s_transform, e_transform, num=20):
+    T = []
+    ts = np.linspace(0.0, 1.0, num=num)
+    for t in ts:
+        transform = (1-t) * s_transform + t * e_transform
+        T.append(transform)
+    return torch.stack(T)
+
+def fix_path(c2w):
+    cm_camera_points = points_from_transforms(c2w)
+    cm_camera_points2d = np.array([cm_camera_points[:, 0], cm_camera_points[:, 1], cm_camera_points[:, 3]]).T
+    show_figure2D(cm_camera_points2d, 'scene1')
+
+    angles = 180 / np.pi * np.arctan2(cm_camera_points2d[:, 1], cm_camera_points[:, 0])
+
+    sp_angle = angles[0]
+    a = np.abs(angles - sp_angle)
+    localminimum = np.r_[True, a[1:] < a[:-1]] & np.r_[a[:-1] < a[1:], True]
+    localminimum_indices = [i for i, x in enumerate(localminimum) if x]
+    c = np.max(localminimum_indices)
+    '''
+    plt.figure()
+    plt.plot(a)
+    plt.title('distance from starting angle')
+
+    fig, axs = plt.subplots(1, 2)
+    axs[0].scatter(cm_camera_points2d[:, 0], cm_camera_points2d[:, 1], color='blue')
+    axs[0].scatter(cm_camera_points2d[localminimum_indices, 0], cm_camera_points2d[localminimum_indices, 1],
+                   color='red')
+
+    axs[1].scatter(cm_camera_points2d[:c, 0], cm_camera_points2d[:c, 1], color='blue')
+    axs[1].scatter(cm_camera_points2d[c:, 0], cm_camera_points2d[c:, 1], color='red')
+
+    plt.show()
+    '''
+    
+    c2w = c2w[:c]
+    margin = 10
+    c2w_fixed = c2w[margin:-margin]
+    bridge = link_cam_points(c2w_fixed[-1], c2w_fixed[0])
+    c2w_fixed = torch.cat((c2w_fixed, bridge), 0)
+    return c2w_fixed
 
 
+'''
 if __name__ == '__main__':
-    json_path_colmap = r'C:\Users\azmih\Desktop\Projects\ComputerVisionLab\TensoRF\data\scene1\transforms_train.json'
-    #json_path_colmap = r'C:\Users\azmih\Desktop\Projects\Instant-NGP-for-RTX-3000-and-4000\data\nerf\62_4316_10771\base_cam.json'
+    
+    a_points = cm_camera_points2d[:, :2]
+    x = a_points[:, 0]
+    y = a_points[:, 1]
+    ell = EllipseModel()
+    ell.estimate(a_points)
 
-    cm_camera_points, camera_angle_x, camera_angle_y, cx, cy, w, h = points_from_transforms(json_path_colmap)
-    show_figure(cm_camera_points, 'scene1_gen')
+    xc, yc, a, b, theta = ell.params
+
+    print("center = ", (xc, yc))
+    print("angle of rotation = ", theta)
+    print("axes = ", (a, b))
+
+    fig, axs = plt.subplots(1, 3, sharex=True, sharey=True)
+    axs[0].scatter(x, y)
+
+    axs[1].scatter(x, y)
+    axs[1].scatter(xc, yc, color='red', s=100)
+    #axs[1].set_xlim(x.min(), x.max())
+    #axs[1].set_ylim(y.min(), y.max())
+
+    ell_patch = Ellipse((xc, yc), 2 * a, 2 * b, theta * 180 / np.pi, edgecolor='red', facecolor='none')
+
+    axs[1].add_patch(ell_patch)
+
+    ##########################
+    # evenly distributed points on ellipse
+    n = 200
+    t = np.random.rand(n) * 2 * np.pi
+    p = np.array([a * np.cos(t), b * np.sin(t)]).T
+
+    axs[2].scatter(p[:, 0], p[:, 1])
+
+
+    ### find closest
+
     #cm_camera_points = base_cam_points(json_path_colmap)
-    arr = np.load(r"C:\Users\azmih\Desktop\Projects\ComputerVisionLab\TensoRF\log\tensorf_1_VM\c2w.npy")
+    arr = np.load(r"C:\\Users\\azmih\\Desktop\\Projects\\ComputerVisionLab\\TensoRF\log\\tensorf_1_VM\c2w.npy")
     points = []
     for i, frame in enumerate(arr):
         # frame_num = frame['file_path']
@@ -110,13 +187,14 @@ if __name__ == '__main__':
     r, z = near_far(cm_camera_points)
 
     # new camera positions
-    '''
+
     tdpoints = points_on_circle(r, (0,0))
     #new_transforms = points_to_transforms(tdpoints)
     o = np.ones((tdpoints.shape[0], 1))
     new_camera_points = np.hstack([tdpoints, z*o, o])
     show_figure(new_camera_points, 'scene1_gen')
-    '''
 
     plt.show()
     end=1
+
+'''

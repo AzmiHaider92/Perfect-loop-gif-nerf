@@ -1,6 +1,8 @@
 
 import os
 from tqdm.auto import tqdm
+
+from TensoRF.camera.visualize_positions import fix_path
 from opt import config_parser
 
 
@@ -80,11 +82,20 @@ def render_test(args):
         evaluation(test_dataset,tensorf, args, renderer, f'{logfolder}/{args.expname}/imgs_test_all/',
                                 N_vis=-1, N_samples=-1, white_bg = white_bg, ndc_ray=ndc_ray,device=device)
 
-    if args.render_path:
+    if args.render_generic_path:
         c2ws = test_dataset.render_path
         #np.save(f'{logfolder}/c2w.npy', np.array(c2ws.data))
         os.makedirs(f'{logfolder}/{args.expname}/imgs_path_all', exist_ok=True)
         evaluation_path(test_dataset, tensorf, c2ws, renderer, f'{logfolder}/{args.expname}/imgs_path_all/',
+                                N_vis=-1, N_samples=-1, white_bg = white_bg, ndc_ray=ndc_ray,device=device)
+
+    if args.render_fixed_path:
+        #c2ws = test_dataset.render_path
+        #np.save(f'{logfolder}/c2w.npy', np.array(c2ws.data))
+        c2w = test_dataset.poses
+        c2w_fixed = fix_path(c2w)
+        os.makedirs(f'{logfolder}/{args.expname}/imgs_fixed_path_all', exist_ok=True)
+        evaluation_path(test_dataset, tensorf, c2w_fixed, renderer, f'{logfolder}/{args.expname}/imgs_fixed_path_all/',
                                 N_vis=-1, N_samples=-1, white_bg = white_bg, ndc_ray=ndc_ray,device=device)
 
 def reconstruction(args):
@@ -306,7 +317,7 @@ if __name__ == '__main__':
     if  args.export_mesh:
         export_mesh(args)
 
-    if args.render_only and (args.render_test or args.render_path):
+    if args.render_only and (args.render_test or args.render_fixed_path or args.render_generic_path):
         render_test(args)
     else:
         reconstruction(args)

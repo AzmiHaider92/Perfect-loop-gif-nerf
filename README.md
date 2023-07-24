@@ -1,15 +1,16 @@
-# Perfect-loop-gif-nerf  
-A perfect loop gif is a gif where the transition between the first and last frame is done smoothly enough the naked eye can't distinguish where the series of image begin and end. The action in the gif appears to be repeated instead of played back.  
-The aim of this project is to create a steady perfect loop gif using a neural radiance fields technique.  
-example of a perfect loop gif:  
+# Perfect-loop-gif using Neural Radiance Fields (NeRF)  
+A perfect-loop-gif is a gif where the transition between the first and last frame is done smoothly enough the naked eye can't distinguish where the series of images begin and end. The action in the gif appears to be repeated instead of played back.  
+The aim of this project is to create a *steady perfect-loop-gif* with the help of a neural radiance fields technique.  
+  
+Example of a perfect loop gif:  
 
 <p align="center">
   <img src="extra/animatedOutput_o.gif" width="250" />
 </p>
 
 # Data 
-Scenes were taken from the dataset: https://ai.meta.com/datasets/CO3D-dataset/   
-Notice the end of the gif, the last frame "jumps" to the first.  
+The objects used in this project are scenes taken from the dataset: https://ai.meta.com/datasets/CO3D-dataset/   
+Notice how at the end of the gif the last frame "jumps" to the first.  
 
 <p align="center">
   <img src="extra/rgb_maps.gif" width="400" />
@@ -17,13 +18,16 @@ Notice the end of the gif, the last frame "jumps" to the first.
 
 # Approach 
   
-Since a gif is a series of images, to utilize nerf, we need to:  
-1) Extract images from the gif.
-2) Calculate the camera position for each image (we use colmap for that).
-3) Train nerf on the extracted images (+ generated camera positions).
-4) Create a new view path (new camera positions).
-5) Run trained nerf network on the new path to generate new images
-6) Create a new gif from the new images.
+To create the *perfect-loop-gif* using NeRF, we follow these steps:  
+1) Extract images from the gif.  
+   Since a gif is a series of images, we can extract and save them as individual images.
+2) Calculate the camera position for each image. We use colmap for that (Colmap is a structure from motion framework that generates camera positions for a given series of images).   
+3) Train NeRF on the extracted images (+ generated camera positions).
+   For this step, we use the TensoRF framework to train NeRF on the specific scene (object).  
+4) Create a new camera path (new camera positions).
+   To create a steady smooth gif, we create a camera path (positions) that surround the object in a steady way.   
+5) Run trained nerf network on the new path to generate new images to match the new camera path.  
+6) Create a new gif from the new generated images.
 
 **1. Extracting images from gif**
 

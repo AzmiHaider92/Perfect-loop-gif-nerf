@@ -45,7 +45,7 @@ You can see clearly that the person holding the camera is moving more than a 360
 Also, the Z axis shows that the person is moving up and down while capturing the video.   
 
 <p align="center">
-  <img src="extra/cameraPositions.png" width="900" />
+  <img src="extra/cameraPositions.png" width="500" />
 </p>
 
 **3. NeRF: Neural Radiance Fields**  
@@ -60,7 +60,7 @@ We also ran Instant-ngp and the result is good. It is definetly another way to g
 </p>
 
 
-**4. New camera positions**  
+**4. New camera positions**   
 After training the model on the scene, we want to generated new images.  
 For this purpose, we need a new camera path (points of view) to create a smooth path for the gif where the first and last frame are identical.
 
@@ -69,8 +69,8 @@ A top-view of the camera path (assume object at (0,0))
   <img src="extra/topview.png" width="600" />
 </p>
 
-We implemented two methods of creating a closed camera path:
-**4.1 fixing the existing camera path**
+We implemented two methods of creating a closed camera path:  
+**4.1 fixing the existing camera path**  
 What we mean by fixing the existing path is: 
 1) find the overlap point in the camera positions 
 2) delete all position after the overlap (in addition to some margin as well).
@@ -84,7 +84,7 @@ Right image: new position replaced the red/yellow positions. For those positions
 </p>
    
 
-**4.2 New generic camera path**
+**4.2 New generic camera path**  
 Another way to go is to ignore the whole camera path given and simply sample 360 camera positions in a steady circle around the object.   
 This creates a more smooth path than before because the camera positions are uniformly distributed and at the same height.
 

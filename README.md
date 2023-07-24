@@ -64,7 +64,7 @@ We also ran Instant-ngp and the result is good. It is definetly another way to g
 After training the model on the scene, we want to use it to generate images to help create a perfect-loop GIF.  
 For this purpose, we need a new camera path (points of view) where the starting point and the end point are the same.
 
-A top-view of the camera path (assume object at (0,0))
+A top-view of the given camera path (assume object at (0,0))
 <p align="center">
   <img src="extra/topview.png" width="300" />
 </p>

@@ -66,7 +66,7 @@ For this purpose, we need a new camera path (points of view) where the starting 
 
 A top-view of the given camera path (assume object at (0,0))
 <p align="center">
-  <img src="extra/topview.png" height="300", width="250" />
+  <img src="extra/topview.png" height="250", width="250" />
 </p>
 
 We implemented two methods of creating a closed camera path:  

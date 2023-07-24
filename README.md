@@ -70,15 +70,17 @@ A top-view of the camera path (assume object at (0,0))
 </p>
 
 We implemented two methods of creating a closed camera path:  
+
+   
 **4.1 fixing the existing camera path**  
 What we mean by fixing the existing path is: 
 1) find the overlap point in the camera positions 
 2) delete all position after the overlap (in addition to some margin as well).
 3) create new position in the missing path.
 
-Left image: the red point marks the overlapping point.
-Middle image: In red, we see the overlapping camera path that is ignored. In yellow, we also ignore a margin of position in order to create a more smooth path.
-Right image: new position replaced the red/yellow positions. For those positions, new images will be generated.
+Left image: the red point marks the overlapping point.  
+Middle image: In red, we see the overlapping camera path that is ignored. In yellow, we also ignore a margin of position in order to create a more smooth path.  
+Right image: new position replaced the red/yellow positions. For those positions, new images will be generated.  
 <p align="center">
   <img src="extra/fixoverlap.png" width="500" />
 </p>

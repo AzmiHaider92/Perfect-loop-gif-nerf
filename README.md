@@ -45,7 +45,7 @@ You can see clearly that the person holding the camera is moving more than a 360
 Also, the Z axis shows that the person is moving up and down while capturing the video.   
 
 <p align="center">
-  <img src="extra/cameraPositions.png" width="500" />
+  <img src="extra/cameraPositions.png" width="900" />
 </p>
 
 **3. NeRF: Neural Radiance Fields**  
@@ -66,7 +66,7 @@ For this purpose, we need a new camera path (points of view) to create a smooth 
 
 A top-view of the camera path (assume object at (0,0))
 <p align="center">
-  <img src="extra/topview.png" width="600" />
+  <img src="extra/topview.png" width="300" />
 </p>
 
 We implemented two methods of creating a closed camera path:  

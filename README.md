@@ -61,8 +61,8 @@ We also ran Instant-ngp and the result is good. It is definetly another way to g
 
 
 **4. New camera positions**   
-After training the model on the scene, we want to generated new images.  
-For this purpose, we need a new camera path (points of view) to create a smooth path for the gif where the first and last frame are identical.
+After training the model on the scene, we want to use it to generate images to help create a perfect-loop GIF.  
+For this purpose, we need a new camera path (points of view) where the starting point and the end point are the same.
 
 A top-view of the camera path (assume object at (0,0))
 <p align="center">
@@ -74,13 +74,17 @@ We implemented two methods of creating a closed camera path:
    
 **4.1 fixing the existing camera path**  
 What we mean by fixing the existing path is: 
-1) find the overlap point in the camera positions 
-2) delete all position after the overlap (in addition to some margin as well).
-3) create new position in the missing path.
+1) Find the overlap point in the camera path:
+   Meaning, find the point where the person completed a 360 degree circle around the object.  
+2) Ignore all position after the overlap point.
+   Every position of camera after it completed a 360 degree is not relevant.
+   Also, we added some margin and Ignored positions before and after the overlapping point.  This way we have a circling path around the object missing some positions.
+3) In those missing positions in the circle, we will create new camera positions and generate images there so the transition is smooth between start and finish.  
+
 
 Left image: the red point marks the overlapping point.  
-Middle image: In red, we see the overlapping camera path that is ignored. In yellow, we also ignore a margin of position in order to create a more smooth path.  
-Right image: new position replaced the red/yellow positions. For those positions, new images will be generated.  
+Middle image: In red, we see the overlapping camera path that is ignored. In yellow, we also ignore a margin of positions in order to create a more smooth path.  
+Right image: new positions are created to replace the red/yellow positions. For those, new images will be generated (all the blue positions from before are the same).  
 <p align="center">
   <img src="extra/fixoverlap.png" width="500" />
 </p>

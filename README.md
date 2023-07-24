@@ -84,7 +84,7 @@ What we mean by fixing the existing path is:
 3) In those missing positions in the circle shown missing in Figure (c), we will create new camera positions (shown in green in figure (d)) and generate images there so the transition is smooth between start and finish.   
   
 <p align="center">
-  <img src="extra/fixoverlap.png" width="800" />
+  <img src="extra/fixoverlap.png" width="900" />
 </p>
    
 

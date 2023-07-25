@@ -97,7 +97,9 @@ This creates a more smooth path than before because the camera positions are uni
 </p>
 
 **5. Generating new images from the new camera positions**  
-We use the trained model to generate new images at given camera positions (explained in 4.1 and 4.2):  
+We use the trained model to generate new images at given camera positions.   
+In 4.1, we created only 20 camera positions and hence 20 new images.  
+In 4.2, we created 360 camera position. Generating all 360 images around the object.  
 <p align="center">
   <img src="extra/generatedImages.png" width="600" />
 </p>

@@ -81,7 +81,7 @@ What we mean by fixing the existing path is:
    Every position of camera after it completed a 360 degree is not relevant. Figure (b) shows those positions in red.  
    Also, we added some margin and Ignored positions before and after the overlapping point. Figure (b) shows the margin in yellow.  
    This way we have a circling path around the object missing some positions.  
-3) In those missing positions in the circle shown missing in Figure (c), we will create new camera positions (shown in green in figure (d)) and generate images there so the transition is smooth between start and finish.   
+3) In those missing positions in the circle shown missing in figure (c), we will create new camera positions (shown in green in figure (d)) and generate images there so that the transition is smooth between start and finish.   
   
 <p align="center">
   <img src="extra/fixoverlap.png" width="900" />
@@ -97,7 +97,7 @@ This creates a more smooth path than before because the camera positions are uni
 </p>
 
 **5. Generating new images from the new camera positions**  
-We use the trained model to generate 360 images from 360 angles around the object:  
+We use the trained model to generate new images at given camera positions (explained in 4.1 and 4.2):  
 <p align="center">
   <img src="extra/generatedImages.png" width="600" />
 </p>

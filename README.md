@@ -5,7 +5,7 @@ The aim of this project is to create a *steady perfect-loop-gif* with the help o
 Example of a perfect loop gif:  
 
 <p align="center">
-  <img src="extra/animatedOutput_o.gif" width="250" />
+  <img src="extra/BMW-i8-360.gif" width="250" />
 </p>
 
 # Data 

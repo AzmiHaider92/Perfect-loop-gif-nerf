@@ -10,7 +10,7 @@ Example of a perfect loop gif:
 
 Example of a jumpy gif:
 <p align="center">
-  <img src="extra/earth_gif.gif" width="400" />
+  <img src="extra/earth_gif.gif" width="300" />
 </p>
 
 # Data 

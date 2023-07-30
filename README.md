@@ -32,9 +32,8 @@ To create the *perfect-loop-gif* using NeRF, we follow these steps:
 2) Calculate the camera position for each image. We use colmap for that (Colmap is a structure from motion framework that generates camera positions for a given series of images).   
 3) Train NeRF on the extracted images (+ generated camera positions).
    For this step, we use the TensoRF framework to train NeRF on the specific scene (object).  
-4) Create a new camera path (new camera positions).
-   To create a steady smooth gif, we create a camera path (positions) that surround the object in a steady way.   
-5) Run trained nerf network on the new path to generate new images to match the new camera path.  
+4) Create/fix the camera path (camera positions) to be a closed circle around the object where the first and last position are the same.  
+5) Run the trained nerf network on the new/fixed path to generate new images.  
 6) Create a new gif from the new generated images.
 
 **1. Extracting images from gif**

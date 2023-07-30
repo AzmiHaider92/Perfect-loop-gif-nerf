@@ -1,27 +1,28 @@
 # Perfect-loop-gif using Neural Radiance Fields (NeRF)  
 A perfect-loop-gif is a gif where the transition between the first and last frame is done smoothly enough the naked eye can't distinguish where the series of images begin and end. The action in the gif appears to be repeated instead of played back.  
-The aim of this project is to create a *steady perfect-loop-gif* with the help of a neural radiance fields technique.  
+The aim of this project is to create a *perfect-loop-gif* with the help of a neural radiance fields technique.  
   
-Example of a perfect loop gif:  
+Example of a *perfect-loop-gif*:  
 
 <p align="center">
   <img src="extra/BMW-i8-360.gif" width="400" />
 </p>
 
-Example of a jumpy gif:
+Example of a *jumpy-gif*:  
+*notice how the end frame "jumps" to the first.  
 <p align="center">
   <img src="extra/earth_gif.gif" width="300" />
 </p>
 
 # Data 
 The objects used in this project are scenes taken from the dataset: https://ai.meta.com/datasets/CO3D-dataset/   
-Notice how at the end of the gif the last frame "jumps" to the first.  
+(you can see the jumpiness in the gif below)    
 
 <p align="center">
   <img src="extra/rgb_maps.gif" width="400" />
 </p>
 
-The "jump" in frames happens because the camera position (position of the person capturing photos around the object) at the first frame and the last frame are not identical. Meaning, the person didn't return to the starting point - see camera positions below.
+The "jump" in frames happens because the camera position (position of the person capturing photos around the object) at the first frame and the last frame are not identical. Meaning, the person didn't return to the starting point (see camera positions below), which is what we fix in this project.
 
 # Approach 
   

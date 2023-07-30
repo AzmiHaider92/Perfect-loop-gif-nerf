@@ -16,7 +16,7 @@ Example of a *jumpy-gif*:
 
 # Data 
 The objects used in this project are scenes taken from the dataset: https://ai.meta.com/datasets/CO3D-dataset/   
-(you can see the jumpiness in the gif below)    
+(Notice the jumpiness in the gif below)    
 
 <p align="center">
   <img src="extra/rgb_maps.gif" width="400" />

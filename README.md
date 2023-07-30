@@ -8,6 +8,11 @@ Example of a perfect loop gif:
   <img src="extra/BMW-i8-360.gif" width="400" />
 </p>
 
+Example of a jumpy gif:
+<p align="center">
+  <img src="extra/earth_gif.gif" width="400" />
+</p>
+
 # Data 
 The objects used in this project are scenes taken from the dataset: https://ai.meta.com/datasets/CO3D-dataset/   
 Notice how at the end of the gif the last frame "jumps" to the first.  

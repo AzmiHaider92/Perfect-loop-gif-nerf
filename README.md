@@ -46,7 +46,7 @@ To create the *perfect-loop-gif* using NeRF, we follow these steps:
 We used Colmap to generate camera positions for extracted images.
 Below is a visualization of the camera positions around the object (number of frame is next to the point in black).  
 The blue points represent the path that the person recording is taking around the object - assume object is placed at (0,0,0).  
-You can see clearly that the person holding the camera is moving more than a 360deg around the object. Meaning, the person is not returning to the origin point.  
+You can see clearly that the person holding the camera circled the object for more than 360 degrees. Meaning, The person did not return to the starting point.  
 Also, the Z axis shows that the person is moving up and down while capturing the video.   
 
 <p align="center">
@@ -66,7 +66,7 @@ We also ran Instant-ngp and the result is good. It is definetly another way to g
 
 
 **4. New camera positions**   
-After training the model on the scene, we want to use it to generate images to help create a perfect-loop GIF.  
+After training the NeRF model on the scene, we use it to generate images to help create a perfect-loop GIF.  
 For this purpose, we need a new camera path (points of view) where the starting point and the end point are the same.
 
 A top-view of the given camera path (assume object at (0,0))
@@ -78,14 +78,14 @@ We implemented two methods of creating a closed camera path:
 
    
 **4.1 fixing the existing camera path**  
-What we mean by fixing the existing path is: 
+Fixing the path means utilizing most of the given camera positions and image. To close the path we do the following: 
 1) Find the overlap point in the camera path:  
    Meaning, find the point where the person completed a 360 degree circle around the object.  
    Figure (a) shows the overlap point in red.  
 2) Ignore all position after the overlap point.  
    Every position of camera after it completed a 360 degree is not relevant. Figure (b) shows those positions in red.  
    Also, we added some margin and Ignored positions before and after the overlapping point. Figure (b) shows the margin in yellow.  
-   This way we have a circling path around the object missing some positions.  
+   After this step, we have a circling path around the object missing some positions.  
 3) In those missing positions in the circle shown missing in figure (c), we will create new camera positions (shown in green in figure (d)) and generate images there so that the transition is smooth between start and finish.   
   
 <p align="center">

@@ -123,7 +123,12 @@ New generic path (unifrom 360):
   <img src="extra/new_path.gif" width="400" />
 </p>
 
-**7. More examples**  
+**7. More examples**    
+<p align="center">
+  <img src="extra/scene2_curve.gif" width="400" />
+</p>
+
+
 
 # References  
 [https://apchenstu.github.io/TensoRF/  

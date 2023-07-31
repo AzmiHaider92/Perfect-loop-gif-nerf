@@ -70,8 +70,8 @@ def evaluation(test_dataset,tensorf, args, renderer, savePath=None, N_vis=5, prt
             rgb_map = np.concatenate((rgb_map, depth_map), axis=1)
             imageio.imwrite(f'{savePath}/rgbd/{prtx}{idx:03d}.png', rgb_map)
 
-    imageio.mimwrite(f'{savePath}/{prtx}video.mp4', np.stack(rgb_maps), fps=30, quality=10)
-    imageio.mimwrite(f'{savePath}/{prtx}depthvideo.mp4', np.stack(depth_maps), fps=30, quality=10)
+    imageio.mimsave(f'{savePath}/{prtx}video.gif', np.stack(rgb_maps), fps=20, format='GIF')
+    imageio.mimsave(f'{savePath}/{prtx}depthvideo.gif', np.stack(depth_maps), fps=20, format='GIF')
 
     if PSNRs:
         psnr = np.mean(np.asarray(PSNRs))
@@ -88,7 +88,7 @@ def evaluation(test_dataset,tensorf, args, renderer, savePath=None, N_vis=5, prt
 
 @torch.no_grad()
 def evaluation_path(test_dataset,tensorf, c2ws, renderer, savePath=None, N_vis=5, prtx='', N_samples=-1,
-                    white_bg=False, ndc_ray=False, compute_extra_metrics=True, device='cuda'):
+                    white_bg=False, ndc_ray=False, compute_extra_metrics=True, device='cuda', added=0):
     PSNRs, rgb_maps, depth_maps = [], [], []
     ssims,l_alex,l_vgg=[],[],[]
     os.makedirs(savePath, exist_ok=True)
@@ -100,6 +100,7 @@ def evaluation_path(test_dataset,tensorf, c2ws, renderer, savePath=None, N_vis=5
         pass
 
     near_far = test_dataset.near_far
+    added_frames = list(range(len(c2ws)-added, len(c2ws)))
     for idx, c2w in tqdm(enumerate(c2ws)):
 
         W, H = test_dataset.img_wh
@@ -120,6 +121,16 @@ def evaluation_path(test_dataset,tensorf, c2ws, renderer, savePath=None, N_vis=5
 
         rgb_map = (rgb_map.numpy() * 255).astype('uint8')
         # rgb_map = np.concatenate((rgb_map, depth_map), axis=1)
+        height, width, _ = rgb_map.shape
+        newsize = (int(width / 5), int(height / 5))
+        rgb_map = cv2.resize(rgb_map, newsize)
+        if idx in added_frames:
+            # green circle in image
+            rgb_map = cv2.circle(rgb_map, (10, 10), 10, (0, 255, 0), 5)
+        else:
+            # blue circle
+            rgb_map = cv2.circle(rgb_map, (10, 10), 10, (255, 0, 0), 5)
+
         rgb_maps.append(rgb_map)
         depth_maps.append(depth_map)
         if savePath is not None:
@@ -127,8 +138,8 @@ def evaluation_path(test_dataset,tensorf, c2ws, renderer, savePath=None, N_vis=5
             rgb_map = np.concatenate((rgb_map, depth_map), axis=1)
             imageio.imwrite(f'{savePath}/rgbd/{prtx}{idx:03d}.png', rgb_map)
 
-    imageio.mimwrite(f'{savePath}/{prtx}video.mp4', np.stack(rgb_maps), fps=30, quality=8)
-    imageio.mimwrite(f'{savePath}/{prtx}depthvideo.mp4', np.stack(depth_maps), fps=30, quality=8)
+    imageio.mimsave(f'{savePath}/{prtx}video.gif', np.stack(rgb_maps), fps=20, format='GIF')
+    imageio.mimsave(f'{savePath}/{prtx}depthvideo.gif', np.stack(depth_maps), fps=20, format='GIF')
 
     if PSNRs:
         psnr = np.mean(np.asarray(PSNRs))

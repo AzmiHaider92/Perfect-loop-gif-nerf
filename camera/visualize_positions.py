@@ -106,35 +106,48 @@ def fix_path(c2w):
     cm_camera_points2d = np.array([cm_camera_points[:, 0], cm_camera_points[:, 1], cm_camera_points[:, 3]]).T
     show_figure2D(cm_camera_points2d, 'scene1')
 
-    angles = 180 / np.pi * np.arctan2(cm_camera_points2d[:, 1], cm_camera_points[:, 0])
+    m = np.mean(cm_camera_points2d, axis=0)
+    angles = 180 / np.pi * np.arctan2(cm_camera_points2d[:, 1] - m[1], cm_camera_points[:, 0] - m[0])
 
     sp_angle = angles[0]
     a = np.abs(angles - sp_angle)
     localminimum = np.r_[True, a[1:] < a[:-1]] & np.r_[a[:-1] < a[1:], True]
     localminimum_indices = [i for i, x in enumerate(localminimum) if x]
     c = np.max(localminimum_indices)
-    '''
+
+    c2w = c2w[:c]
+    margin = 10
+    num_added_frames = 20
+    c2w_fixed = c2w[margin:-margin]
+    bridge = link_cam_points(c2w_fixed[-1], c2w_fixed[0], num=num_added_frames)
+    c2w_fixed = torch.cat((c2w_fixed, bridge), 0)
+
+
     plt.figure()
     plt.plot(a)
     plt.title('distance from starting angle')
 
-    fig, axs = plt.subplots(1, 2)
+    fig, axs = plt.subplots(1, 4)
     axs[0].scatter(cm_camera_points2d[:, 0], cm_camera_points2d[:, 1], color='blue')
     axs[0].scatter(cm_camera_points2d[localminimum_indices, 0], cm_camera_points2d[localminimum_indices, 1],
-                   color='red')
+                       color='red')
+    #axs[0].title('overlap point in red')
 
-    axs[1].scatter(cm_camera_points2d[:c, 0], cm_camera_points2d[:c, 1], color='blue')
+
+    axs[1].scatter(cm_camera_points2d[:, 0], cm_camera_points2d[:, 1], color='blue')
+    axs[1].scatter(cm_camera_points2d[:margin, 0], cm_camera_points2d[:margin, 1], color='yellow')
+    axs[1].scatter(cm_camera_points2d[c-margin:, 0], cm_camera_points2d[c-margin:, 1], color='yellow')
     axs[1].scatter(cm_camera_points2d[c:, 0], cm_camera_points2d[c:, 1], color='red')
 
+    axs[2].scatter(cm_camera_points2d[margin:c-margin, 0], cm_camera_points2d[margin:c-margin, 1], color='blue')
+
+    new_cm_camera_points = points_from_transforms(c2w_fixed)
+    axs[3].scatter(new_cm_camera_points[:, 0], new_cm_camera_points[:, 1], color='green')
+    axs[3].scatter(cm_camera_points2d[margin:c - margin, 0], cm_camera_points2d[margin:c - margin, 1], color='blue')
+
     plt.show()
-    '''
-    
-    c2w = c2w[:c]
-    margin = 10
-    c2w_fixed = c2w[margin:-margin]
-    bridge = link_cam_points(c2w_fixed[-1], c2w_fixed[0])
-    c2w_fixed = torch.cat((c2w_fixed, bridge), 0)
-    return c2w_fixed
+
+    return c2w_fixed, num_added_frames
 
 
 '''

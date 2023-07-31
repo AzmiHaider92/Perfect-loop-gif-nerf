@@ -126,6 +126,7 @@ New generic path (unifrom 360):
 **7. More examples**    
 <p align="center">
   <img src="extra/scene2_curve.gif" width="400" />
+  <img src="extra/linear_vs_curve.png" width="400" />
 </p>
 
 

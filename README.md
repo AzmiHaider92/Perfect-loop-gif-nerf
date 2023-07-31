@@ -130,7 +130,8 @@ New generic path (unifrom 360):
 
 **7. More examples**    
 <p align="center">
-  <img src="extra/scene2_curve.gif" width="400" />
+  <img src="extra/scene2_original.gif" width="300" />
+  <img src="extra/scene2_curve.gif" width="300" />
 </p>
 
 

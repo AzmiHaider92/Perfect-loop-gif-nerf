@@ -93,15 +93,35 @@ def points_to_transforms(points):
         m = np.concatenate([np.concatenate([R, t], 1), bottom], 0)
 
 
-def link_cam_points(s_transform, e_transform, num=20):
-    T = []
-    ts = np.linspace(0.0, 1.0, num=num)
-    for t in ts:
-        transform = (1-t) * s_transform + t * e_transform
-        T.append(transform)
-    return torch.stack(T)
+def model_f(x,a,b,c):
+  return a*x**6 + b*x + c
 
-def fix_path(c2w):
+
+from scipy.optimize import curve_fit
+
+
+def link_cam_points(s_transform, e_transform, num=20, curvfit=0):
+    T = []
+
+    ts = np.linspace(0.0, 1.0, num=num)
+    s = s_transform[0]
+    e = e_transform[-1]
+    for t in ts:
+        transform = (1-t) * s + t * e
+        T.append(transform)
+    T = torch.stack(T)
+    if curvfit: # 2nd
+        transforms = np.vstack((s_transform, e_transform))
+        loc = transforms[:,0:2,3]
+        popt, pcov = curve_fit(model_f, loc[:,0], loc[:,1], p0=[3, 2, -16])
+        a_opt, b_opt, c_opt = popt
+        loc2 = T[:,0:2,3]
+        y_fitted = model_f(loc2[:,0], a_opt, b_opt, c_opt)
+        T[:, 1, 3] = y_fitted
+
+    return T
+
+def fix_path(c2w, curvefit=0, margin = 10, num_added_frames = 20):
     cm_camera_points = points_from_transforms(c2w)
     cm_camera_points2d = np.array([cm_camera_points[:, 0], cm_camera_points[:, 1], cm_camera_points[:, 3]]).T
     show_figure2D(cm_camera_points2d, 'scene1')
@@ -116,10 +136,9 @@ def fix_path(c2w):
     c = np.max(localminimum_indices)
 
     c2w = c2w[:c]
-    margin = 10
-    num_added_frames = 20
+
     c2w_fixed = c2w[margin:-margin]
-    bridge = link_cam_points(c2w_fixed[-1], c2w_fixed[0], num=num_added_frames)
+    bridge = link_cam_points(c2w_fixed[0:margin], c2w_fixed[-margin:], num=num_added_frames, curvfit=curvefit)
     c2w_fixed = torch.cat((c2w_fixed, bridge), 0)
 
 

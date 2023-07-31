@@ -306,7 +306,7 @@ def reconstruction(args):
         # c2ws = test_dataset.render_path
         # np.save(f'{logfolder}/c2w.npy', np.array(c2ws.data))
         c2w = train_dataset.poses
-        c2w_fixed, added = fix_path(c2w)
+        c2w_fixed, added = fix_path(c2w, curvefit=1)
         os.makedirs(f'{logfolder}/{args.expname}/imgs_fixed_path_all', exist_ok=True)
         evaluation_path(train_dataset, tensorf, c2w_fixed, renderer, f'{logfolder}/{args.expname}/imgs_fixed_path_all/',
                         N_vis=-1, N_samples=-1, white_bg=white_bg, ndc_ray=ndc_ray, device=device, added=added)

@@ -121,7 +121,7 @@ def link_cam_points(s_transform, e_transform, num=20, curvfit=0):
 
     return T
 
-def fix_path(c2w, curvefit=0, margin = 10, num_added_frames = 20):
+def fix_path(c2w, margin = 10, num_added_frames = 20 , curvefit=0):
     cm_camera_points = points_from_transforms(c2w)
     cm_camera_points2d = np.array([cm_camera_points[:, 0], cm_camera_points[:, 1], cm_camera_points[:, 3]]).T
     show_figure2D(cm_camera_points2d, 'scene1')

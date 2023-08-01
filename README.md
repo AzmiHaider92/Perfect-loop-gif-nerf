@@ -135,6 +135,13 @@ New generic path (unifrom 360):
   <img src="extra/scene2_curve.gif" width="300" />
 </p>
 
+
+<p align="center">
+  <img src="extra/scene6_original.gif" width="300" />
+  <img src="extra/scene6_lin.gif" width="300" />
+</p>
+
+
 Photos I've took with my phone (therefore, there are fewer images and the transitions are not that smooth):   
 
 

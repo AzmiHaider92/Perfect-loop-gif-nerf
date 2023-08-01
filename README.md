@@ -92,7 +92,12 @@ Fixing the path means utilizing most of the given camera positions and image. To
   <img src="extra/fixoverlap.png" width="900" />
 </p>
    
-
+**Linear and curve fitting**  
+We've added the ability to fit a curve to complete the camera path:   
+<p align="center">
+  <img src="extra/linear_vs_curve.png" width="400" />
+</p>
+  
 **4.2 New generic camera path**  
 Another way to go is to ignore the whole camera path given and simply sample 360 camera positions in a steady circle around the object.   
 This creates a more smooth path than before because the camera positions are uniformly distributed and at the same height.
@@ -123,7 +128,13 @@ New generic path (unifrom 360):
   <img src="extra/new_path.gif" width="400" />
 </p>
 
-**7. More examples**  
+**7. More examples**    
+<p align="center">
+  <img src="extra/scene2_original.gif" width="300" />
+  <img src="extra/scene2_curve.gif" width="300" />
+</p>
+
+
 
 # References  
 [https://apchenstu.github.io/TensoRF/  

@@ -94,24 +94,22 @@ def points_to_transforms(points):
 
 
 def model_f(x,a,b,c):
-  return a*x**6 + b*x + c
+  return a*x**2 + b*x + c
 
 
 from scipy.optimize import curve_fit
 
 
-def link_cam_points(s_transform, e_transform, num=20, curvfit=0):
+def link_cam_points(s_transform, e_transform, num=10, curvfit=0):
     T = []
 
     ts = np.linspace(0.0, 1.0, num=num)
     s = s_transform[0]
     e = e_transform[-1]
-    for t in ts:
-        transform = (1-t) * s + t * e
-        T.append(transform)
+    T = [(1-t) * e + t * s for t in ts]
     T = torch.stack(T)
     if curvfit: # 2nd
-        transforms = np.vstack((s_transform, e_transform))
+        transforms = np.vstack((e_transform, s_transform))
         loc = transforms[:,0:2,3]
         popt, pcov = curve_fit(model_f, loc[:,0], loc[:,1], p0=[3, 2, -16])
         a_opt, b_opt, c_opt = popt
@@ -122,6 +120,7 @@ def link_cam_points(s_transform, e_transform, num=20, curvfit=0):
     return T
 
 def fix_path(c2w, margin = 10, num_added_frames = 20 , curvefit=0):
+    added_image_indices = np.zeros((len(c2w),1))
     cm_camera_points = points_from_transforms(c2w)
     cm_camera_points2d = np.array([cm_camera_points[:, 0], cm_camera_points[:, 1], cm_camera_points[:, 3]]).T
     show_figure2D(cm_camera_points2d, 'scene1')
@@ -135,12 +134,20 @@ def fix_path(c2w, margin = 10, num_added_frames = 20 , curvefit=0):
     localminimum_indices = [i for i, x in enumerate(localminimum) if x]
     c = np.max(localminimum_indices)
 
-    c2w = c2w[:c]
+    # completed a 360. delete every position after 360
+    if c < len(c2w)-1:
+        c2w = c2w[:c]
+        added_image_indices = added_image_indices[:c]
 
-    c2w_fixed = c2w[margin:-margin]
+    # remove margin from the end
+    c2w_fixed = c2w[:-margin]
+    added_image_indices = added_image_indices[:-margin]
+
     bridge = link_cam_points(c2w_fixed[0:margin], c2w_fixed[-margin:], num=num_added_frames, curvfit=curvefit)
-    c2w_fixed = torch.cat((c2w_fixed, bridge), 0)
+    bridge_ind = np.ones((len(bridge),1))
 
+    c2w_fixed = torch.cat((c2w_fixed, bridge), 0)
+    added_image_indices = np.vstack((added_image_indices, bridge_ind))
 
     plt.figure()
     plt.plot(a)
@@ -161,12 +168,14 @@ def fix_path(c2w, margin = 10, num_added_frames = 20 , curvefit=0):
     axs[2].scatter(cm_camera_points2d[margin:c-margin, 0], cm_camera_points2d[margin:c-margin, 1], color='blue')
 
     new_cm_camera_points = points_from_transforms(c2w_fixed)
+    new_cm_camera_points = new_cm_camera_points[:,[0,1,3]]
+    show_figure2D(new_cm_camera_points, 'scene2')
     axs[3].scatter(new_cm_camera_points[:, 0], new_cm_camera_points[:, 1], color='green')
-    axs[3].scatter(cm_camera_points2d[margin:c - margin, 0], cm_camera_points2d[margin:c - margin, 1], color='blue')
+    #axs[3].scatter(cm_camera_points2d[margin:c - margin, 0], cm_camera_points2d[margin:c - margin, 1], color='blue')
 
     plt.show()
 
-    return c2w_fixed, num_added_frames
+    return c2w_fixed, added_image_indices
 
 
 '''

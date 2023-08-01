@@ -55,7 +55,7 @@ def export_mesh(args):
 def render_test(args):
     # init dataset
     dataset = dataset_dict[args.dataset_name]
-    test_dataset = dataset(args.datadir, split='test', downsample=args.downsample_train, is_stack=True)
+    test_dataset = dataset(args.datadir, split='train', downsample=args.downsample_train, is_stack=True)
     white_bg = test_dataset.white_bg
     ndc_ray = args.ndc_ray
 
@@ -84,19 +84,22 @@ def render_test(args):
 
     if args.render_generic_path:
         c2ws = test_dataset.render_path
+        image_paths = test_dataset.image_paths
+        added_image_indices = np.ones((len(c2ws), 1))
         #np.save(f'{logfolder}/c2w.npy', np.array(c2ws.data))
         os.makedirs(f'{logfolder}/{args.expname}/imgs_path_all', exist_ok=True)
-        evaluation_path(test_dataset, tensorf, c2ws, renderer, f'{logfolder}/{args.expname}/imgs_path_all/',
+        evaluation_path(test_dataset, tensorf, c2ws,image_paths,added_image_indices, renderer, f'{logfolder}/{args.expname}/imgs_path_all/',
                                 N_vis=-1, N_samples=-1, white_bg = white_bg, ndc_ray=ndc_ray,device=device)
 
     if args.render_fixed_path:
         #c2ws = test_dataset.render_path
         #np.save(f'{logfolder}/c2w.npy', np.array(c2ws.data))
         c2w = test_dataset.poses
-        c2w_fixed, added = fix_path(c2w, curvefit=args.curvefit)
+        image_paths = test_dataset.image_paths
+        c2w_fixed, added_image_indices = fix_path(c2w, curvefit=args.curvefit, margin=3, num_added_frames=20)
         os.makedirs(f'{logfolder}/{args.expname}/imgs_fixed_path_all', exist_ok=True)
-        evaluation_path(test_dataset, tensorf, c2w_fixed, renderer, f'{logfolder}/{args.expname}/imgs_fixed_path_all/',
-                                N_vis=-1, N_samples=-1, white_bg = white_bg, ndc_ray=ndc_ray,device=device, added=added)
+        evaluation_path(test_dataset, tensorf, c2w_fixed, image_paths, added_image_indices, renderer, f'{logfolder}/{args.expname}/imgs_fixed_path_all/',
+                                N_vis=-1, N_samples=-1, white_bg = white_bg, ndc_ray=ndc_ray,device=device)
 
 def reconstruction(args):
 

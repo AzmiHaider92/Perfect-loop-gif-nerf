@@ -120,7 +120,6 @@ class YourOwnDataset(Dataset):
             rays_o, rays_d = get_rays(self.directions, c2w)  # both (h*w, 3)
             self.all_rays += [torch.cat([rays_o, rays_d], 1)]  # (h*w, 6)
 
-
         self.poses = torch.stack(self.poses)
         if not self.is_stack:
             self.all_rays = torch.cat(self.all_rays, 0)  # (len(self.meta['frames])*h*w, 3)

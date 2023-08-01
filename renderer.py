@@ -87,7 +87,7 @@ def evaluation(test_dataset,tensorf, args, renderer, savePath=None, N_vis=5, prt
     return PSNRs
 
 @torch.no_grad()
-def evaluation_path(test_dataset,tensorf, c2ws, renderer, savePath=None, N_vis=5, prtx='', N_samples=-1,
+def evaluation_path(test_dataset,tensorf, c2ws, image_paths, added_image_indices, renderer, savePath=None, N_vis=5, prtx='', N_samples=-1,
                     white_bg=False, ndc_ray=False, compute_extra_metrics=True, device='cuda', added=0):
     PSNRs, rgb_maps, depth_maps = [], [], []
     ssims,l_alex,l_vgg=[],[],[]
@@ -100,46 +100,46 @@ def evaluation_path(test_dataset,tensorf, c2ws, renderer, savePath=None, N_vis=5
         pass
 
     near_far = test_dataset.near_far
-    added_frames = list(range(len(c2ws)-added, len(c2ws)))
     for idx, c2w in tqdm(enumerate(c2ws)):
 
         W, H = test_dataset.img_wh
+        if added_image_indices[idx]:
+            c2w = torch.FloatTensor(np.array(c2w.data))
+            rays_o, rays_d = get_rays(test_dataset.directions, c2w)  # both (h*w, 3)
+            if ndc_ray:
+                rays_o, rays_d = ndc_rays_blender(H, W, test_dataset.focal[0], 1.0, rays_o, rays_d)
+            rays = torch.cat([rays_o, rays_d], 1)  # (h*w, 6)
 
-        c2w = torch.FloatTensor(np.array(c2w.data))
-        rays_o, rays_d = get_rays(test_dataset.directions, c2w)  # both (h*w, 3)
-        if ndc_ray:
-            rays_o, rays_d = ndc_rays_blender(H, W, test_dataset.focal[0], 1.0, rays_o, rays_d)
-        rays = torch.cat([rays_o, rays_d], 1)  # (h*w, 6)
+            rgb_map, _, depth_map, _, _ = renderer(rays, tensorf, chunk=8192, N_samples=N_samples,
+                                                   ndc_ray=ndc_ray, white_bg=white_bg, device=device)
+            rgb_map = rgb_map.clamp(0.0, 1.0)
 
-        rgb_map, _, depth_map, _, _ = renderer(rays, tensorf, chunk=8192, N_samples=N_samples,
-                                        ndc_ray=ndc_ray, white_bg = white_bg, device=device)
-        rgb_map = rgb_map.clamp(0.0, 1.0)
+            rgb_map, depth_map = rgb_map.reshape(H, W, 3).cpu(), depth_map.reshape(H, W).cpu()
 
-        rgb_map, depth_map = rgb_map.reshape(H, W, 3).cpu(), depth_map.reshape(H, W).cpu()
+            depth_map, _ = visualize_depth_numpy(depth_map.numpy(), near_far)
 
-        depth_map, _ = visualize_depth_numpy(depth_map.numpy(),near_far)
-
-        rgb_map = (rgb_map.numpy() * 255).astype('uint8')
-        # rgb_map = np.concatenate((rgb_map, depth_map), axis=1)
-        height, width, _ = rgb_map.shape
-        newsize = (int(width / 5), int(height / 5))
-        rgb_map = cv2.resize(rgb_map, newsize)
-        if idx in added_frames:
+            rgb_map = (rgb_map.numpy() * 255).astype('uint8')
+            # rgb_map = np.concatenate((rgb_map, depth_map), axis=1)
+            #height, width, _ = rgb_map.shape
+            #newsize = (int(width / 5), int(height / 5))
+            #rgb_map = cv2.resize(rgb_map, newsize)
             # green circle in image
-            rgb_map = cv2.circle(rgb_map, (10, 10), 10, (0, 255, 0), 5)
+            rgb_map = cv2.circle(rgb_map, (10, 10), 10, (0, 255, 0), -1)
         else:
             # blue circle
-            rgb_map = cv2.circle(rgb_map, (10, 10), 10, (255, 0, 0), 5)
+            rgb_map = cv2.imread(image_paths[idx])
+            rgb_map = cv2.cvtColor(rgb_map, cv2.COLOR_BGR2RGB)
+            rgb_map = cv2.circle(rgb_map, (10, 10), 10, (255, 0, 0), -1)
 
         rgb_maps.append(rgb_map)
-        depth_maps.append(depth_map)
+        #depth_maps.append(depth_map)
         if savePath is not None:
             imageio.imwrite(f'{savePath}/{prtx}{idx:03d}.png', rgb_map)
-            rgb_map = np.concatenate((rgb_map, depth_map), axis=1)
-            imageio.imwrite(f'{savePath}/rgbd/{prtx}{idx:03d}.png', rgb_map)
+            #rgb_map = np.concatenate((rgb_map, depth_map), axis=1)
+            #imageio.imwrite(f'{savePath}/rgbd/{prtx}{idx:03d}.png', rgb_map)
 
     imageio.mimsave(f'{savePath}/{prtx}video.gif', np.stack(rgb_maps), fps=20, format='GIF')
-    imageio.mimsave(f'{savePath}/{prtx}depthvideo.gif', np.stack(depth_maps), fps=20, format='GIF')
+    #imageio.mimsave(f'{savePath}/{prtx}depthvideo.gif', np.stack(depth_maps), fps=20, format='GIF')
 
     if PSNRs:
         psnr = np.mean(np.asarray(PSNRs))

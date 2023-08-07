@@ -159,6 +159,12 @@ Photos I've took with my phone (therefore, there are fewer images and the transi
 </p>
 
 
+<p align="center">
+  <img src="extra/scene7_original.gif" width="300" />
+  <img src="extra/scene7_lin.gif" width="300" />
+</p>
+
+
 
 **7. Limitation**   
 When there are few images showing a side of the object, it is hard to generate a new image there due to the lack of information and some distorion might appear.  

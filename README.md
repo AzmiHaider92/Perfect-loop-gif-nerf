@@ -128,7 +128,8 @@ New generic path (unifrom 360):
   <img src="extra/new_path.gif" width="400" />
 </p>
 
-**7. More examples**    
+**7. More examples**  
+*Left: original. Right: corrected*
 
 <p align="center">
   <img src="extra/scene2_original.gif" width="300" />
@@ -144,8 +145,7 @@ New generic path (unifrom 360):
 
 Photos I've took with my phone (therefore, there are fewer images and the transitions are not that smooth):   
 
-
-    
+*Pay attention to the color transition*      
 <p align="center">
   <img src="extra/scene5_original.gif" width="300" />
   <img src="extra/scene5_lin.gif" width="300" />

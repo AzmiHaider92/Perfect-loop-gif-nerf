@@ -150,8 +150,9 @@ Photos I've took with my phone (therefore, there are fewer images and the transi
   <img src="extra/scene5_original.gif" width="300" />
   <img src="extra/scene5_lin.gif" width="300" />
 </p>
-
-
+  
+  
+*very detailed scenes are harder to generate images in*      
 <p align="center">
   <img src="extra/scene4_original.gif" width="300" />
   <img src="extra/scene4_lin.gif" width="300" />

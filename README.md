@@ -128,7 +128,7 @@ New generic path (unifrom 360):
   <img src="extra/new_path.gif" width="400" />
 </p>
 
-**7. More examples**  
+**7. More examples and limitations**  
 *Left: original. Right: corrected*
 
 <p align="center">
@@ -143,7 +143,7 @@ New generic path (unifrom 360):
 </p>
 
 
-Photos I've took with my phone (therefore, there are fewer images and the transitions are not that smooth):   
+I've taken photos with my phone (therefore, there are fewer images and the transitions might be less smooth):   
 
 *Pay attention to the pyramid's color transition*      
 <p align="center">
@@ -160,7 +160,7 @@ Photos I've took with my phone (therefore, there are fewer images and the transi
   <img src="extra/scene7_lin.gif" width="300" />
 </p>
 
-
+*part of the room was not seen in training. therefore, some distorion happened to the generated images.*
 <p align="center">
   <img src="extra/scene4_original.gif" width="300" />
   <img src="extra/scene4_lin.gif" width="300" />

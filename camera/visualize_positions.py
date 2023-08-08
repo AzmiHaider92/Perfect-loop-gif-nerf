@@ -94,7 +94,7 @@ def points_to_transforms(points):
 
 
 def model_f(x,a,b,c):
-  return a*x**2 + b*x + c
+  return a*x**3 + b*x + c
 
 
 from scipy.optimize import curve_fit

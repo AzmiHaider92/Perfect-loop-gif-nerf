@@ -152,15 +152,16 @@ I've taken photos with my phone (therefore, there are fewer images and the trans
 </p>
   
   
-*very detailed scenes are harder for image generation.*   
-*Generated images might lack information or be more blurred.*  
+*Very detailed scenes are harder for image generation.*   
+*Generated images might lack information or be more blurred:*  
 
 <p align="center">
   <img src="extra/scene7_original.gif" width="300" />
   <img src="extra/scene7_lin.gif" width="300" />
 </p>
 
-*part of the room was not seen in training. therefore, some distorion happened to the generated images.*
+*In the following example, part of the room was not seen in training. therefore, some distorion happened to the generated images:*   
+
 <p align="center">
   <img src="extra/scene4_original.gif" width="300" />
   <img src="extra/scene4_lin.gif" width="300" />

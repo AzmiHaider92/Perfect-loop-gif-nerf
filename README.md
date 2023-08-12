@@ -15,7 +15,7 @@ Example of a *jumpy-gif*:
 </p>
 
 # Data 
-The objects used in this project are scenes taken from the dataset: https://ai.meta.com/datasets/CO3D-dataset/   
+The objects used in this project are either scenes taken from the dataset: https://ai.meta.com/datasets/CO3D-dataset/ or photos I've taken with my smartphone.   
 (Notice the jumpiness in the gif below)    
 
 <p align="center">

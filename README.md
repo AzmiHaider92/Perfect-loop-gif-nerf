@@ -101,9 +101,9 @@ We've added the ability to fit a curve to complete the camera path:
 
 from left to right: original, linear path, curve fit path.   
 <p align="center">
-  <img src="extra/scene6_original.gif" width="300" />
-  <img src="extra/scene6_lin.gif" width="300" />
-  <img src="extra/scene6_curve.gif" width="300" />
+  <img src="extra/scene6_original.gif" width="200" />
+  <img src="extra/scene6_lin.gif" width="200" />
+  <img src="extra/scene6_curve.gif" width="200" />
 </p>
   
 **4.2 New generic camera path**  

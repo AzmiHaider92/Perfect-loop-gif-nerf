@@ -95,7 +95,15 @@ Fixing the path means utilizing most of the given camera positions and image. To
 **Linear and curve fitting**  
 We've added the ability to fit a curve to complete the camera path:   
 <p align="center">
-  <img src="extra/linear_vs_curve.png" width="400" />
+  <img src="extra/lin.png" width="400" />
+  <img src="extra/curve.png" width="400" />
+</p>
+
+from left to right: original, linear path, curve fit path.   
+<p align="center">
+  <img src="extra/scene6_original.gif" width="300" />
+  <img src="extra/scene6_lin.gif" width="300" />
+  <img src="extra/scene6_curve.gif" width="300" />
 </p>
   
 **4.2 New generic camera path**  
@@ -134,12 +142,6 @@ New generic path (unifrom 360):
 <p align="center">
   <img src="extra/scene2_original.gif" width="300" />
   <img src="extra/scene2_curve.gif" width="300" />
-</p>
-
-
-<p align="center">
-  <img src="extra/scene6_original.gif" width="300" />
-  <img src="extra/scene6_lin.gif" width="300" />
 </p>
 
 

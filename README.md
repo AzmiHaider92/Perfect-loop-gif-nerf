@@ -59,7 +59,6 @@ The code has a camera visualizer which plots the camera plane with it's rotation
   <img src="extra/cameraP1.png" , width="200" />
   <img src="extra/cameraP2.png" , width="200" />
   <img src="extra/cameraP3.png" , width="200" />
-  <img src="extra/cameraP4.png" , width="200" />
 </p>
 
 **3. NeRF: Neural Radiance Fields**  

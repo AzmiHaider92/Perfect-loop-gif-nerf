@@ -10,7 +10,7 @@ import imageio
 
 
 if __name__ == '__main__':
-    folder = r"C:\Users\azmih\Desktop\Projects\ComputerVisionLab\TensoRF\log\tensorf_7_VM\tensorf_7_VM\imgs_fixed_path_all"
+    folder = r"C:\Users\azmih\Desktop\Projects\ComputerVisionLab\TensoRF\log\tensorf_6_VM\tensorf_6_VM\imgs_fixed_path_all_lin"
     images = []
     rimgs = os.listdir(folder)
     for j in range(len(rimgs)):
@@ -25,4 +25,4 @@ if __name__ == '__main__':
 
         images.append(img)
 
-    imageio.mimsave(f"{folder}\\rgb_maps.gif", images, format='GIF', fps=20)
+    imageio.mimsave(f"{folder}\\rgb_maps.gif", images, format='GIF', fps=10)

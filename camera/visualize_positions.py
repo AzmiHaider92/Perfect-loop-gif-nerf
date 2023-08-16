@@ -94,7 +94,7 @@ def points_to_transforms(points):
 
 
 def model_f(x,a,b,c):
-  return a*x**3 + b*x + c
+  return a*x**2 + b*x + c
 
 
 from scipy.optimize import curve_fit
@@ -143,7 +143,8 @@ def fix_path(c2w, margin = 10, num_added_frames = 20 , curvefit=0):
     c2w_fixed = c2w[:-margin]
     added_image_indices = added_image_indices[:-margin]
 
-    bridge = link_cam_points(c2w_fixed[0:margin], c2w_fixed[-margin:], num=num_added_frames, curvfit=curvefit)
+    fit_margin = 4
+    bridge = link_cam_points(c2w_fixed[0:fit_margin], c2w_fixed[-fit_margin:], num=num_added_frames, curvfit=curvefit)
     bridge_ind = np.ones((len(bridge),1))
 
     c2w_fixed = torch.cat((c2w_fixed, bridge), 0)

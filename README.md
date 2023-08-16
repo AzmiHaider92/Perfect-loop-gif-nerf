@@ -56,9 +56,9 @@ Also, the Z axis shows that the person is moving up and down while capturing the
 *cool addition*   
 The code has a camera visualizer which plots the camera plane with it's rotation and position (not just position as above).  
 <p align="center">
-  <img src="extra/cameraP1.png" , width="200" />
-  <img src="extra/cameraP2.png" , width="200" />
-  <img src="extra/cameraP3.png" , width="200" />
+  <img src="extra/cameraP1.png" , width="250" />
+  <img src="extra/cameraP2.png" , width="250" />
+  <img src="extra/cameraP3.png" , width="250" />
 </p>
 
 **3. NeRF: Neural Radiance Fields**  

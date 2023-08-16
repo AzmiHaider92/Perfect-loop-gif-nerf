@@ -76,6 +76,15 @@ A top-view of the given camera path (assume object at (0,0))
 
 We implemented two methods of creating a closed camera path:  
 
+*cool addition*   
+The code has a camera visualizer which plots the camera plane with it's rotation and position (not just position as above).  
+<p align="center">
+  <img src="extra/cameraP1.png" , width="200" />
+  <img src="extra/cameraP2.png" , width="200" />
+  <img src="extra/cameraP3.png" , width="200" />
+  <img src="extra/cameraP4.png" , width="200" />
+</p>
+
    
 **4.1 fixing the existing camera path**  
 Fixing the path means utilizing most of the given camera positions and image. To close the path we do the following: 

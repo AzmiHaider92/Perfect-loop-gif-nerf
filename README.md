@@ -161,7 +161,10 @@ I've taken photos with my phone (therefore, there are fewer images and the trans
 *Pay attention to the pyramid's color transition*      
 <p align="center">
   <img src="extra/scene5_original.gif" width="300" />
-  <img src="extra/scene5_lin.gif" width="300" />
+</p>
+
+<p align="center">
+  <img src="extra/scene5_withmap.gif" width="800" />
 </p>
   
   

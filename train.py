@@ -96,7 +96,7 @@ def render_test(args):
         #np.save(f'{logfolder}/c2w.npy', np.array(c2ws.data))
         c2w = test_dataset.poses
         image_paths = test_dataset.image_paths
-        c2w_fixed, added_image_indices = fix_path(c2w, curvefit=args.curvefit, margin=30, num_added_frames=30)
+        c2w_fixed, added_image_indices = fix_path(c2w, curvefit=args.curvefit, margin=30, num_added_frames=45)
         os.makedirs(f'{logfolder}/{args.expname}/imgs_fixed_path_all', exist_ok=True)
         evaluation_path(test_dataset, tensorf, c2w_fixed, image_paths, added_image_indices, renderer, f'{logfolder}/{args.expname}/imgs_fixed_path_all/',
                                 N_vis=-1, N_samples=-1, white_bg = white_bg, ndc_ray=ndc_ray,device=device)

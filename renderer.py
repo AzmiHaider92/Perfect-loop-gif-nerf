@@ -1,5 +1,8 @@
+import numpy as np
 import torch,os,imageio,sys
 from tqdm.auto import tqdm
+import matplotlib.pyplot as plt
+from TensoRF.camera.visualize_positions import points_from_transforms
 from dataLoader.ray_utils import get_rays
 from models.tensoRF import TensorVM, TensorCP, raw2alpha, TensorVMSplit, AlphaGridMask
 from utils import *
@@ -101,6 +104,19 @@ def evaluation_path(test_dataset,tensorf, c2ws, image_paths, added_image_indices
 
     near_far = test_dataset.near_far
     for idx, c2w in tqdm(enumerate(c2ws)):
+        # LOCATIONS MAP
+        fig, (ax, ax2) = plt.subplots(ncols=2, figsize=(10,5), gridspec_kw={'width_ratios': [2, 1.5]})
+        ax.tick_params(left=False, right=False, labelleft=False,
+                        labelbottom=False, bottom=False)
+        ax2.tick_params(left=False, right=False, labelleft=False,
+                        labelbottom=False, bottom=False)
+        pts = points_from_transforms(c2ws)
+        pts = pts[:, [0, 1, 3]]
+        ax2.scatter(pts[:, 0], pts[:, 1], color='red')
+        idxs = [i for i in range(len(added_image_indices)) if added_image_indices[i]]
+        ax2.scatter(pts[idxs, 0], pts[idxs, 1], color='green')
+        ax2.scatter(0, 0, color='black', marker='x', s=200)
+
 
         W, H = test_dataset.img_wh
         if added_image_indices[idx]:
@@ -124,21 +140,26 @@ def evaluation_path(test_dataset,tensorf, c2ws, image_paths, added_image_indices
             #newsize = (int(width / 5), int(height / 5))
             #rgb_map = cv2.resize(rgb_map, newsize)
             # green circle in image
-            rgb_map = cv2.circle(rgb_map, (10, 10), 10, (0, 255, 0), -1)
+            #rgb_map = cv2.circle(rgb_map, (10, 10), 10, (0, 255, 0), -1)
+            rgb_map = create_border(rgb_map, 20, np.array([0, 255,  0]))
+            ax2.scatter(pts[idx, 0], pts[idx, 1], color='green', marker='o', s=200)
         else:
             # blue circle
             rgb_map = cv2.imread(image_paths[idx])
             rgb_map = cv2.cvtColor(rgb_map, cv2.COLOR_BGR2RGB)
-            rgb_map = cv2.circle(rgb_map, (10, 10), 10, (255, 0, 0), -1)
+            rgb_map = create_border(rgb_map,20,np.array([255, 0, 0]))
+            ax2.scatter(pts[idx, 0], pts[idx, 1], color='red', marker='o', s=200)
+            #rgb_map = cv2.circle(rgb_map, (10, 10), 10, (255, 0, 0), -1)
 
-        rgb_maps.append(rgb_map)
+        ax.imshow(rgb_map)
         #depth_maps.append(depth_map)
         if savePath is not None:
-            imageio.imwrite(f'{savePath}/{prtx}{idx:03d}.png', rgb_map)
+            plt.savefig(f'{savePath}/{prtx}{idx:03d}.png')
+            #imageio.imwrite(f'{savePath}/{prtx}{idx:03d}.png', rgb_map)
             #rgb_map = np.concatenate((rgb_map, depth_map), axis=1)
             #imageio.imwrite(f'{savePath}/rgbd/{prtx}{idx:03d}.png', rgb_map)
 
-    imageio.mimsave(f'{savePath}/{prtx}video.gif', np.stack(rgb_maps), fps=20, format='GIF')
+    #imageio.mimsave(f'{savePath}/{prtx}video.gif', np.stack(rgb_maps), fps=20, format='GIF')
     #imageio.mimsave(f'{savePath}/{prtx}depthvideo.gif', np.stack(depth_maps), fps=20, format='GIF')
 
     if PSNRs:
@@ -153,4 +174,17 @@ def evaluation_path(test_dataset,tensorf, c2ws, image_paths, added_image_indices
 
 
     return PSNRs
+
+
+def create_border(img, width, color=np.array([0, 0, 0])):
+    #color must be a np.array
+
+    img_shape = img.shape
+    upper_border = np.full((width, img_shape[1], 3), color) #for 3-channel image
+    side_border = np.full((img_shape[0] + 2*width, width, 3), color)
+
+    bordered = np.concatenate([upper_border, img, upper_border])
+    bordered = np.concatenate([side_border, bordered, side_border], axis=1)
+
+    return bordered
 

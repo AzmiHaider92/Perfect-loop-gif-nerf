@@ -173,14 +173,19 @@ I've taken photos with my phone (therefore, there are fewer images and the trans
 
 <p align="center">
   <img src="extra/scene7_original.gif" width="300" />
-  <img src="extra/scene7_lin.gif" width="300" />
 </p>
+<p align="center">
+  <img src="extra/scene7_withmaps.gif" width="800" />
+</p>
+
 
 *In the following example, part of the room was not seen in training. therefore, some distorion happened to the generated images:*   
 
 <p align="center">
   <img src="extra/scene4_original.gif" width="300" />
-  <img src="extra/scene4_lin.gif" width="300" />
+</p>
+<p align="center">
+  <img src="extra/scene4_withmaps.gif" width="800" />
 </p>
 
 

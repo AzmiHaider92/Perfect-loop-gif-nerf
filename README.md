@@ -149,7 +149,7 @@ New generic path (unifrom 360):
 
 <p align="center">
   <img src="extra/scene2_original.gif" width="300" />
-  <img src="extra/scene2_withmap.gif" width="300" />
+  <img src="extra/scene2_withmap.gif" width="600" />
 </p>
 
 
